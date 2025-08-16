@@ -175,16 +175,14 @@ class ProductListingView extends GetView<ProductListingController> {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     const SizedBox(height: 5),
+                                    SizedBox(height: 8),
                                     Text(
-                                      product.description ?? "----",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.grey,
-                                        fontSize: Get.height * .013,
-                                      ),
-                                      maxLines: 3,
+                                      product.description ?? '',
+                                      style: TextStyle(color: Colors.grey),
+                                      maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                     ),
+
                                     const SizedBox(height: 8),
                                     Row(
                                       children: [

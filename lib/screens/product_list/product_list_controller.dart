@@ -17,24 +17,24 @@ class ProductListingController extends GetxController {
     initialProductList();
   }
 
+
   Future<void> initialProductList() async {
     try {
       final ApiResp resp = await ProductServices.getproductList();
-      if (resp.ok) {
+      if (resp.ok && resp.rdata is Map<String, dynamic>) {
         final prodDetails = ProductListingModel.fromJson(resp.rdata);
         proData.assignAll(prodDetails.products ?? []);
         favorites.value = List.generate(proData.length, (_) => false);
-        isScreenProgress.value = false;
-        print('Product data fetched successfully: ${proData.length} items');
       } else {
-        isScreenProgress.value = false;
-        print('Error fetching product data: ${resp.msgs}');
+        print('Invalid or empty API response: ${resp.rdata}');
       }
     } catch (e) {
-      isScreenProgress.value = false;
       print('Error fetching product data: $e');
+    } finally {
+      isScreenProgress.value = false;
     }
   }
+
 
   void toggleFavorite(int index) {
     favorites[index] = !favorites[index];

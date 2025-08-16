@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:sinrorobotics_machine_test/components/app_buttons.dart';
+import 'package:sinrorobotics_machine_test/components/rounded_loader.dart';
 import 'package:sinrorobotics_machine_test/screens/product_detail_page/product_detail_controller.dart';
 import '../../components/app_refresh.dart';
 import '../../utils/my_theme.dart';
@@ -51,7 +52,7 @@ class ProductDetailView extends GetView<ProductDetailViewController> {
             children: [
               Obx(() {
                 if (controller.isScreenProgress.value) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: RoundedLoader());
                 }
 
                 final product = controller.product.value;

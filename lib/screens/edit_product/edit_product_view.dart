@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:sinrorobotics_machine_test/components/rounded_loader.dart';
 import '../../components/app_buttons.dart';
 import '../../utils/my_theme.dart';
 import '../../utils/my_utils.dart';
@@ -53,7 +54,7 @@ class EditProductView extends GetView<EditProductController> {
                     const SizedBox(height: 20),
                     MAButton(
                       buttonPress: () async {
-                        controller.updateProduct;
+                        await controller.updateProduct();   // ✅ execute function
                       },
                       text: 'Save Changes',
                       height: 40,
@@ -64,6 +65,7 @@ class EditProductView extends GetView<EditProductController> {
                       color: MyTheme.myBlueDark,
                       colors: MyTheme.whiteColor,
                     ),
+
                   ],
                 ),
               ),
@@ -71,7 +73,7 @@ class EditProductView extends GetView<EditProductController> {
                 Container(
                   color: Colors.black45,
                   child: const Center(
-                    child: CircularProgressIndicator(),
+                    child: RoundedLoader(),
                   ),
                 ),
             ],

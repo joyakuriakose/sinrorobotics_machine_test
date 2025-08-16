@@ -14,6 +14,8 @@ class ProductDetailViewController extends GetxController {
   RxBool isFavorite = false.obs;
 
   @override
+
+
   void onInit() {
     super.onInit();
     id = Get.arguments as int?;
