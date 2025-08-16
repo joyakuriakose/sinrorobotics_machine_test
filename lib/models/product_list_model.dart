@@ -4,9 +4,11 @@
 
 import 'dart:convert';
 
-ProductListingModel productsFromJson(String str) => ProductListingModel.fromJson(json.decode(str));
+ProductListingModel productsFromJson(String str) =>
+    ProductListingModel.fromJson(json.decode(str));
 
-String productsToJson(ProductListingModel data) => json.encode(data.toJson());
+String productsToJson(ProductListingModel data) =>
+    json.encode(data.toJson());
 
 class ProductListingModel {
   List<ProductListing>? products;
@@ -21,15 +23,21 @@ class ProductListingModel {
     this.limit,
   });
 
-  factory ProductListingModel.fromJson(Map<String, dynamic> json) => ProductListingModel(
-    products: List<ProductListing>.from(json["products"].map((x) => ProductListing.fromJson(x))),
-    total: json["total"],
-    skip: json["skip"],
-    limit: json["limit"],
-  );
+  factory ProductListingModel.fromJson(Map<String, dynamic> json) =>
+      ProductListingModel(
+        products: json["products"] == null
+            ? []
+            : List<ProductListing>.from(
+            json["products"].map((x) => ProductListing.fromJson(x))),
+        total: json["total"],
+        skip: json["skip"],
+        limit: json["limit"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "products": List<dynamic>.from(products!.map((x) => x.toJson())),
+    "products": products == null
+        ? []
+        : List<dynamic>.from(products!.map((x) => x.toJson())),
     "total": total,
     "skip": skip,
     "limit": limit,
@@ -89,24 +97,42 @@ class ProductListing {
     id: json["id"],
     title: json["title"],
     description: json["description"],
-    category: categoryValues.map[json["category"]],
-    price: json["price"].toDouble(),
-    discountPercentage: json["discountPercentage"].toDouble(),
-    rating: json["rating"].toDouble(),
+    category: json["category"] == null
+        ? null
+        : categoryValues.map[json["category"]],
+    price: json["price"] == null ? null : json["price"].toDouble(),
+    discountPercentage: json["discountPercentage"] == null
+        ? null
+        : json["discountPercentage"].toDouble(),
+    rating:
+    json["rating"] == null ? null : json["rating"].toDouble(),
     stock: json["stock"],
-    tags: List<String>.from(json["tags"].map((x) => x)),
+    tags: json["tags"] == null
+        ? []
+        : List<String>.from(json["tags"].map((x) => x)),
     brand: json["brand"],
     sku: json["sku"],
     weight: json["weight"],
-    dimensions: Dimensions.fromJson(json["dimensions"]),
+    dimensions: json["dimensions"] == null
+        ? null
+        : Dimensions.fromJson(json["dimensions"]),
     warrantyInformation: json["warrantyInformation"],
     shippingInformation: json["shippingInformation"],
-    availabilityStatus: availabilityStatusValues.map[json["availabilityStatus"]],
-    reviews: List<Review>.from(json["reviews"].map((x) => Review.fromJson(x))),
-    returnPolicy: returnPolicyValues.map[json["returnPolicy"]],
+    availabilityStatus: json["availabilityStatus"] == null
+        ? null
+        : availabilityStatusValues.map[json["availabilityStatus"]],
+    reviews: json["reviews"] == null
+        ? []
+        : List<Review>.from(
+        json["reviews"].map((x) => Review.fromJson(x))),
+    returnPolicy: json["returnPolicy"] == null
+        ? null
+        : returnPolicyValues.map[json["returnPolicy"]],
     minimumOrderQuantity: json["minimumOrderQuantity"],
-    meta: Meta.fromJson(json["meta"]),
-    images: List<String>.from(json["images"].map((x) => x)),
+    meta: json["meta"] == null ? null : Meta.fromJson(json["meta"]),
+    images: json["images"] == null
+        ? []
+        : List<String>.from(json["images"].map((x) => x)),
     thumbnail: json["thumbnail"],
   );
 
@@ -114,44 +140,48 @@ class ProductListing {
     "id": id,
     "title": title,
     "description": description,
-    "category": categoryValues.reverse[category],
+    "category": category == null
+        ? null
+        : categoryValues.reverse[category],
     "price": price,
     "discountPercentage": discountPercentage,
     "rating": rating,
     "stock": stock,
-    "tags": List<dynamic>.from(tags!.map((x) => x)),
+    "tags": tags == null
+        ? []
+        : List<dynamic>.from(tags!.map((x) => x)),
     "brand": brand,
     "sku": sku,
     "weight": weight,
-    "dimensions": dimensions!.toJson(),
+    "dimensions": dimensions?.toJson(),
     "warrantyInformation": warrantyInformation,
     "shippingInformation": shippingInformation,
-    "availabilityStatus": availabilityStatusValues.reverse[availabilityStatus],
-    "reviews": List<dynamic>.from(reviews!.map((x) => x.toJson())),
-    "returnPolicy": returnPolicyValues.reverse[returnPolicy],
+    "availabilityStatus": availabilityStatus == null
+        ? null
+        : availabilityStatusValues.reverse[availabilityStatus],
+    "reviews": reviews == null
+        ? []
+        : List<dynamic>.from(reviews!.map((x) => x.toJson())),
+    "returnPolicy": returnPolicy == null
+        ? null
+        : returnPolicyValues.reverse[returnPolicy],
     "minimumOrderQuantity": minimumOrderQuantity,
-    "meta": meta!.toJson(),
-    "images": List<dynamic>.from(images!.map((x) => x)),
+    "meta": meta?.toJson(),
+    "images": images == null
+        ? []
+        : List<dynamic>.from(images!.map((x) => x)),
     "thumbnail": thumbnail,
   };
 }
 
-enum AvailabilityStatus {
-  IN_STOCK,
-  LOW_STOCK
-}
+enum AvailabilityStatus { IN_STOCK, LOW_STOCK }
 
 final availabilityStatusValues = EnumValues({
   "In Stock": AvailabilityStatus.IN_STOCK,
   "Low Stock": AvailabilityStatus.LOW_STOCK
 });
 
-enum Category {
-  BEAUTY,
-  FRAGRANCES,
-  FURNITURE,
-  GROCERIES
-}
+enum Category { BEAUTY, FRAGRANCES, FURNITURE, GROCERIES }
 
 final categoryValues = EnumValues({
   "beauty": Category.BEAUTY,
@@ -172,9 +202,9 @@ class Dimensions {
   });
 
   factory Dimensions.fromJson(Map<String, dynamic> json) => Dimensions(
-    width: json["width"].toDouble(),
-    height: json["height"].toDouble(),
-    depth: json["depth"].toDouble(),
+    width: json["width"] == null ? null : json["width"].toDouble(),
+    height: json["height"] == null ? null : json["height"].toDouble(),
+    depth: json["depth"] == null ? null : json["depth"].toDouble(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -198,15 +228,19 @@ class Meta {
   });
 
   factory Meta.fromJson(Map<String, dynamic> json) => Meta(
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
+    createdAt: json["createdAt"] == null
+        ? null
+        : DateTime.tryParse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null
+        ? null
+        : DateTime.tryParse(json["updatedAt"]),
     barcode: json["barcode"],
     qrCode: json["qrCode"],
   );
 
   Map<String, dynamic> toJson() => {
-    "createdAt": createdAt!.toIso8601String(),
-    "updatedAt": updatedAt!.toIso8601String(),
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
     "barcode": barcode,
     "qrCode": qrCode,
   };
@@ -246,7 +280,9 @@ class Review {
   factory Review.fromJson(Map<String, dynamic> json) => Review(
     rating: json["rating"],
     comment: json["comment"],
-    date: DateTime.parse(json["date"]),
+    date: json["date"] == null
+        ? null
+        : DateTime.tryParse(json["date"]),
     reviewerName: json["reviewerName"],
     reviewerEmail: json["reviewerEmail"],
   );
@@ -254,7 +290,7 @@ class Review {
   Map<String, dynamic> toJson() => {
     "rating": rating,
     "comment": comment,
-    "date": date!.toIso8601String(),
+    "date": date?.toIso8601String(),
     "reviewerName": reviewerName,
     "reviewerEmail": reviewerEmail,
   };

@@ -7,8 +7,10 @@ import 'package:sinrorobotics_machine_test/components/app_buttons.dart';
 import 'package:sinrorobotics_machine_test/components/rounded_loader.dart';
 import 'package:sinrorobotics_machine_test/screens/product_detail_page/product_detail_controller.dart';
 import '../../components/app_refresh.dart';
+import '../../models/product_list_model.dart';
 import '../../utils/my_theme.dart';
 import '../../utils/my_utils.dart';
+import '../product_list/product_list_controller.dart';
 
 class ProductDetailView extends GetView<ProductDetailViewController> {
   const ProductDetailView({Key? key}) : super(key: key);
@@ -214,14 +216,24 @@ class ProductDetailView extends GetView<ProductDetailViewController> {
                                 'id': controller.id,
                                 'title': controller.product.value?.title ?? '',
                                 'price': controller.product.value?.price ?? 0,
-                                'description':
-                                    controller.product.value?.description ?? '',
+                                'description': controller.product.value?.description ?? '',
                               },
                             );
 
-                            if (updated == true) {
-                              controller.fetchProductDetails();
+                            if (updated != null) {
+                              controller.product.value = ProductListing.fromJson(updated); // ✅ single product update
                             }
+
+
+                            // if (updated != null) {
+                            //   final updatedProduct = ProductListing.fromJson(updated);
+                            //   controller.product.value = updatedProduct;
+                            //
+                            //   // also update listing page if controller is alive
+                            //   final listingCtrl = Get.find<ProductListingController>();
+                            //   listingCtrl.updateProductInList(updatedProduct);
+                            // }
+
                           },
                           text: 'Edit',
                           height: 40,
@@ -233,6 +245,7 @@ class ProductDetailView extends GetView<ProductDetailViewController> {
                           colors: MyTheme.whiteColor,
                         ),
                       ),
+
                     ],
                   ),
                 );

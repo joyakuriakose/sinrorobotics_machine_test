@@ -38,9 +38,12 @@ class EditProductController extends GetxController {
     isScreenProgress.value = false;
 
     if (resp.ok) {
+      // update local product before going back
+      final updatedData = resp.rdata;
+      Get.back(result: updatedData); // return updated product instead of just true
       Get.snackbar("Success", "Product updated successfully");
-      Get.back(result: true); // return true so details page knows to refresh
-    } else {
+    }
+    else {
       Get.snackbar("Error", "Failed to update product");
     }
 

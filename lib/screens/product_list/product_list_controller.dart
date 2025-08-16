@@ -34,6 +34,13 @@ class ProductListingController extends GetxController {
       isScreenProgress.value = false;
     }
   }
+  void updateProductInList(ProductListing updatedProduct) {
+    final index = proData.indexWhere((p) => p.id == updatedProduct.id);
+    if (index != -1) {
+      proData[index] = updatedProduct;
+      proData.refresh(); // tell GetX to update UI
+    }
+  }
 
 
   void toggleFavorite(int index) {
